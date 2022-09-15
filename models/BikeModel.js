@@ -24,4 +24,4 @@ const bikeSchema = new mongoose.Schema({
     versionKey: false
 });
 
-module.exports = mongoose.model('Bike', bikeSchema);
+export default mongoose.model('Bike', bikeSchema);

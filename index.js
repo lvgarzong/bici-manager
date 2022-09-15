@@ -1,7 +1,14 @@
 import express from 'express';
 import rentingRouter from './routes/rentingRoutes.js';
 import reservationRouter from './routes/reservationRoutes.js';  
-import client from './config/db.js'
+import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import mongoose from 'mongoose';
+import MongoStore from 'connect-mongo';
+import './config/db.js';
+
+dotenv.config({path: '.env'});
 
 const app = express();
 app.use(express.json());
@@ -18,17 +25,21 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(cookieParser());
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  key: process.env.SESSION_KEY,
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({mongoUrl: process.env.MONGODB_URI}),
+}));
+
 //Routing
 app.use('/', reservationRouter);
 app.use('/', rentingRouter);
 
-client.connect(err => {
-    const collection = client.db("test").collection("devices");  
-    client.close();
-});
-
-const port = 3000;
-app.listen(port, () => {
+const port = process.env.PORT;
+app.listen(port , () => {
     console.log(`Listening on port ${port}`);
 });
 

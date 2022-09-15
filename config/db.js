@@ -1,12 +1,13 @@
-import { MongoClient, ServerApiVersion } from 'mongodb';
+import mongoose from 'mongoose';
 import dotenv from 'dotenv'
-dotenv.config({path: '.env'})
 
-const client = new MongoClient(uri, { 
-    useNewUrlParser: true, 
-    useUnifiedTopology: true, 
-    serverApi: ServerApiVersion.v1 
+dotenv.config({path: '.env'});
+
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 });
 
-
-export default client;
+mongoose.connection.on('connected', () => {
+    console.log('Mongoose has connected successfully');
+})
