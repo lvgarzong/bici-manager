@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const bikeSchema = new mongoose.Schema({
     id: {
         type: Number,
-        required: true,
+        required: false,
         unique: true,
         validate : {
             validator : Number.isInteger,

@@ -1,6 +1,6 @@
 # bici-manager
 
-## Proyecto para el alquiler de bicicletas 
+## Proyecto para el inventario de bicicletas 
 
 ### Desarrollado por Laura Valentina Garzón Güiza
 
